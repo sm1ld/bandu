@@ -1,5 +1,4 @@
-import {displayLoginStatus} from './status.js';
-
+import { displayLoginStatus } from './status.js';
 // 获取购物车数据
 async function fetchCartItems() {
     try {
