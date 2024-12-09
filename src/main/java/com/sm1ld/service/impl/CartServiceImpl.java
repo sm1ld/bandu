@@ -20,7 +20,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void delCart( Integer userId,Integer itemId) {
-        cartMapper.delCart(userId,itemId);
+        cartMapper.delCartByUI(userId, itemId);
     }
 
     @Override

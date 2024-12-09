@@ -1,6 +1,5 @@
 package com.sm1ld.controller;
 
-import com.sm1ld.pojo.Item;
 import com.sm1ld.pojo.Order;
 import com.sm1ld.pojo.Result;
 import com.sm1ld.service.OrderService;
@@ -22,32 +21,21 @@ public class OrderController {
     private OrderService orderService;
 
     // 获取当前用户的订单
-    @GetMapping("/{userId}")
-    public Result getOrderByUserId(@PathVariable int userId, HttpServletRequest request) {
-        Integer currentUserId = JwtUtils.getCurrentUserId(request);
-        if (currentUserId == null || !currentUserId.equals(userId)) {
-            return Result.error("无权查看该用户的订单");
-        }
-
+    @GetMapping("/view")
+    public Result getOrderByUid(HttpServletRequest request) {
+        Integer userId = JwtUtils.getCurrentUserId(request);
         List<Order> orders = orderService.getOrderByUid(userId);
         return Result.success(orders);
     }
 
     // 创建订单
-    @PostMapping("/{userId}")
-    public Result createOrder(@RequestBody Order order,@RequestBody List<Item> orderItem, @PathVariable Integer userId, HttpServletRequest request) {
+    @PostMapping("/create")
+    public Result createOrder(HttpServletRequest request) {
         // 获取当前用户的 ID
-        Integer currentUserId = JwtUtils.getCurrentUserId(request);
-
-        // 确认当前用户是否为请求中的用户
-        if (currentUserId == null || !currentUserId.equals(userId)) {
-            return Result.error("无权创建该用户订单");
-        }
+        Integer userId = JwtUtils.getCurrentUserId(request);
 
         try {
-            // 设置订单的买家ID为当前用户ID
-            order.setUserId(currentUserId);
-            orderService.createOrder(order,orderItem);
+            orderService.createOrder(userId);
             return Result.success("订单创建成功");
         } catch (Exception e) {
             log.error("订单创建失败: {}", e.getMessage());
@@ -55,19 +43,12 @@ public class OrderController {
         }
     }
 
-
-
     // 更新订单
-    @PutMapping("/{userId}/{orderId}")
-    public Result updateOrder(@PathVariable Integer userId, @PathVariable Integer orderId, @RequestBody Order order, HttpServletRequest request) {
-        Integer currentUserId = JwtUtils.getCurrentUserId(request);
-        if (currentUserId == null || !currentUserId.equals(userId)) {
-            return Result.error("无权更新该用户订单");
-        }
-
-        order.setOrderId(orderId);
+    @PutMapping("/update")
+    public Result updateOrder(@RequestBody Order order, HttpServletRequest request) {
+        Integer userId = JwtUtils.getCurrentUserId(request);
         try {
-            orderService.updateOrder(order);
+            orderService.updateOrder(order, userId);
             return Result.success("订单更新成功");
         } catch (Exception e) {
             log.error("订单更新失败: {}", e.getMessage());
@@ -76,15 +57,11 @@ public class OrderController {
     }
 
     // 删除订单
-    @DeleteMapping("/{userId}/{orderId}")
-    public Result deleteOrder(@PathVariable Integer userId, @PathVariable Long orderId, HttpServletRequest request) {
-        Integer currentUserId = JwtUtils.getCurrentUserId(request);
-        if (currentUserId == null || !currentUserId.equals(userId)) {
-            return Result.error("无权删除该用户订单");
-        }
-
+    @DeleteMapping("/{orderId}")
+    public Result deleteOrder(@PathVariable Integer orderId, HttpServletRequest request) {
+        Integer userId = JwtUtils.getCurrentUserId(request);
         try {
-            orderService.deleteOrder(orderId);
+            orderService.delOrderByOU(orderId, userId);
             return Result.success("订单删除成功");
         } catch (Exception e) {
             log.error("订单删除失败: {}", e.getMessage());
@@ -93,23 +70,5 @@ public class OrderController {
     }
 }
 
-
-//    // 获取所有订单
-//    @GetMapping
-//    public Result getAllOrders() {
-//        List<Order> orders = orderService.getAllOrders();
-//        return Result.success(orders);
-//    }
-
-//    // 获取订单详情
-//    @GetMapping("/{orderId}")
-//    public Result getOrderDetails(@PathVariable Long orderId) {
-//        Order order = orderService.getOrderDetails(orderId);
-//        if (order != null) {
-//            return Result.success(order);
-//        } else {
-//            return Result.error(null);
-//        }
-//    }
 
 

@@ -1,8 +1,10 @@
 package com.sm1ld.mapper;
 
 import com.sm1ld.pojo.Cart;
-import com.sm1ld.pojo.Item;
-import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -14,7 +16,10 @@ public interface CartMapper {
 
     // 删除购物车中的商品
     @Delete("DELETE FROM cart WHERE userId = #{userId} AND itemId = #{itemId}")
-    void delCart(@Param("userId") Integer userId, @Param("itemId") Integer itemId);
+    void delCartByUI(@Param("userId") Integer userId, @Param("itemId") Integer itemId);
+
+    @Delete("DELETE FROM cart WHERE id = #{id} ")
+    void delCartById(@Param("id") Integer id);
 
     // 更新购物车商品数量
     @Update("UPDATE cart SET number = #{number}, updatedAt = NOW() WHERE userId = #{userId} AND itemId = #{itemId}")

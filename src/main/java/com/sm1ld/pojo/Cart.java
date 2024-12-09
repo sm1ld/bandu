@@ -24,6 +24,4 @@ public class Cart {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private List<Item> items= new ArrayList<>();
-
-
 }
