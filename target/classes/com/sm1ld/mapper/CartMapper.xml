@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.sm1ld.mapper.CartMapper">
+
+    <select id="findByUid" resultMap="CartItemResultMap">
+        SELECT c.id AS cart_id, c.itemId AS cart_itemId, c.number AS cart_quantity,c.createdAt As cart_addedAt,
+               i.title AS item_title,i.imageUrl AS item_imageUrl, i.price AS item_price, i.quantity AS item_stock,
+                i.sellerId AS item_sellerId
+        FROM cart c
+                 LEFT JOIN item i ON c.itemId = i.id
+        WHERE c.userId = #{userId}
+    </select>
+
+    <resultMap id="CartItemResultMap" type="com.sm1ld.pojo.Cart">
+        <!-- 映射购物车条目字段 -->
+        <id property="id" column="cart_id"/>
+        <result property="userId" column="cart_userId"/>
+        <result property="itemId" column="cart_itemId"/>
+        <result property="number" column="cart_quantity"/>
+        <result property="createdAt" column="cart_addedAt"/>
+
+        <!-- 映射商品简化信息 -->
+        <association property="items" javaType="com.sm1ld.pojo.Item">
+            <result property="id" column="cart_itemId"/>
+            <result property="title" column="item_title"/>
+            <result property="imageUrl" column="item_imageUrl"/>
+            <result property="price" column="item_price"/>
+            <result property="sellerId" column="item_sellerId"/>
+            <result property="quantity" column="item_stock"/>
+        </association>
+    </resultMap>
+    <select id="getCartItems" resultType="com.sm1ld.pojo.Cart">
+        SELECT
+            c.id AS cartId,
+            c.userId,
+            c.itemId,
+            c.sellerId,
+            c.number,
+            c.subtotal,
+            c.createdAt,
+            c.updatedAt,
+            i.title AS itemTitle,   -- 商品标题
+            i.price AS itemPrice  -- 商品单价
+        FROM cart c
+                 JOIN item i ON c.itemId = i.id
+        WHERE c.userId = #{userId}
+    </select>
+
+    <!-- 通过购物车的商品ID获取商品的卖家ID -->
+    <select id="getSellerIdByItemId" resultType="Integer">
+        SELECT sellerId
+        FROM item
+        WHERE id = #{itemId}
+    </select>
+
+    <!-- 根据用户 ID 和商品 ID 查询购物车中的商品数量 -->
+    <select id="getCartItemNumber" resultType="Integer">
+        SELECT number
+        FROM cart
+        WHERE userId = #{userId} AND itemId = #{itemId}
+    </select>
+
+    <!-- 更新购物车中商品的数量 -->
+<!--    <update id="updateCartItem">-->
+<!--        UPDATE cart-->
+<!--        SET quantity = #{quantity}-->
+<!--        WHERE userId = #{userId} AND itemId = #{itemId}-->
+<!--    </update>-->
+
+    <!-- 插入新的购物车项 -->
+    <insert id="insertCart">
+        INSERT INTO cart (userId, itemId, sellerId, number, subtotal, createdAt, updatedAt)
+        SELECT #{userId}, #{itemId}, sellerId, #{number}, #{number} * price, NOW(), NOW()
+        FROM item
+        WHERE id = #{itemId}
+    </insert>
+
+
+
+</mapper>

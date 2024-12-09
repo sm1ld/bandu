@@ -1,0 +1,85 @@
+/*login.css*/
+/* 通用样式 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;  /* 浅色背景 */
+    display: flex;  /* 使用 Flexbox 来实现居中 */
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+    height: 100vh; /* 高度占满整个视口 */
+    color: #333;  /* 深色字体 */
+}
+
+.container {
+    background-color: #fff;  /* 白色背景 */
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);  /* 更柔和的阴影效果 */
+    width: 100%;
+    max-width: 400px; /* 设置最大宽度 */
+}
+
+h2 {
+    text-align: center;
+    color: #333;  /* 深色文字 */
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;  /* 浅色边框 */
+    background-color: #f9f9f9;  /* 输入框背景色 */
+    color: #333;  /* 深色文字 */
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+input:focus {
+    border-color: #ccc;  /* 聚焦时边框颜色不变 */
+    outline: none;
+    background-color: #fff;  /* 聚焦时背景颜色恢复白色 */
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #333;  /* 按钮黑色 */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s ease;  /* 平滑过渡效果 */
+    font-weight: bold;
+}
+
+button:hover {
+    transform: scale(1.05);  /* 按钮悬停时轻微放大 */
+}
+
+button:active {
+    transform: scale(1);  /* 被点击时取消放大效果 */
+}
+
+p {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1rem;
+}
+
+p a {
+    color: blue;  /* 链接颜色改为深色 */
+    text-decoration: none;
+    font-weight: 500;
+}
+
+p a:hover {
+    text-decoration: underline;
+}

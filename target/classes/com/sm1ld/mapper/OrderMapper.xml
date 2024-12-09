@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.sm1ld.mapper.OrderMapper">
+    <!-- 根据 userId 查询当前用户的所有订单 -->
+    <select id="getOrderByUid" resultMap="orderWithItems">
+        SELECT o.orderId, o.userId, o.orderStatus, o.payStatus, o.payMethod, o.total, o.address, o.sendDate, o.sentDate,
+               oi.itemId, oi.quantity, oi.price, (oi.quantity * oi.price) AS subTotal, i.title AS itemTitle
+        FROM `order` o
+                 LEFT JOIN orderitem oi ON o.orderId = oi.orderId
+                 LEFT JOIN item i ON oi.itemId = i.id
+        WHERE o.userId = #{userId};
+    </select>
+    <!-- ResultMap，映射查询结果（订单与商品） -->
+    <resultMap id="orderWithItems" type="com.sm1ld.pojo.Order">
+        <id property="orderId" column="orderId"/>
+        <result property="userId" column="userId"/>
+        <result property="orderStatus" column="orderStatus"/>
+        <result property="payStatus" column="payStatus"/>
+        <result property="payMethod" column="payMethod"/>
+        <result property="total" column="total"/>
+        <result property="address" column="address"/>
+        <result property="sendDate" column="sendDate"/>
+        <result property="sentDate" column="sentDate"/>
+        <!-- 订单商品部分 -->
+        <collection property="orderItem" ofType="com.sm1ld.pojo.Item">
+            <id property="id" column="itemId"/>
+            <result property="title" column="itemTitle"/> <!-- 映射商品名称 -->
+            <result property="quantity" column="quantity"/>
+            <result property="price" column="price"/>
+            <result property="subTotal" column="subTotal"/> <!-- 映射计算得到的小计 -->
+        </collection>
+    </resultMap>
+
+    <!-- 插入订单 -->
+    <insert id="insertOrder" parameterType="com.sm1ld.pojo.Order">
+        INSERT INTO `order` (userId, sellerId,orderStatus, payStatus, payMethod, total, address, orderDate)
+        VALUES (#{userId},#{sellerId},#{orderStatus}, #{payStatus}, #{payMethod}, #{total}, #{address},now());
+    </insert>
+    <!-- 插入订单商品 -->
+    <!-- 插入订单商品 -->
+    <insert id="insertOrderItems" parameterType="java.util.List">
+        <foreach collection="orderItemList" item="orderItem" index="index" open="" separator="," close="">
+            (#{orderItem.orderId}, #{orderItem.itemId}, #{orderItem.quantity}, #{orderItem.price}, #{orderItem.subTotal})
+        </foreach>
+    </insert>
+
+
+<!--    &lt;!&ndash; 根据订单ID查询订单详细信息（订单 + 商品） &ndash;&gt;-->
+<!--    <select id="selectOrderById" resultMap="orderWithItems" parameterType="Long">-->
+<!--        SELECT * FROM `order` o-->
+<!--    #     LEFT JOIN order_item oi ON o.orderId = oi.orderId-->
+<!--        WHERE o.orderId = #{orderId};-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash; 根据订单ID删除订单 &ndash;&gt;-->
+<!--    <delete id="deleteOrderById" parameterType="Long">-->
+<!--        DELETE FROM `order` WHERE orderId = #{orderId};-->
+<!--    </delete>-->
+
+<!--    &lt;!&ndash; 更新订单信息 &ndash;&gt;-->
+<!--    <update id="updateOrder" parameterType="com.sm1ld.pojo.Order">-->
+<!--        UPDATE `order`-->
+<!--        SET orderStatus = #{orderStatus},-->
+<!--        payStatus = #{payStatus},-->
+<!--        payMethod = #{payMethod},-->
+<!--        total = #{total},-->
+<!--        address = #{address},-->
+<!--        sendDate = #{sendDate},-->
+<!--        sentDate = #{sentDate}-->
+<!--        WHERE orderId = #{orderId};-->
+<!--    </update>-->
+
+
+
+
+</mapper>

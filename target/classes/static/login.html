@@ -1,0 +1,29 @@
+<!--login.html-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户登录</title>
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+
+<div class="container">
+    <h2>用户登录</h2>
+    <form id="loginForm">
+        <label for="loginUsername">用户名：</label>
+        <input type="text" id="loginUsername" placeholder="请输入用户名" required>
+
+        <label for="loginPassword">密码：</label>
+        <input type="password" id="loginPassword" placeholder="请输入密码" required>
+
+        <button type="submit">登录</button>
+    </form>
+    <p>没有账号？<a href="register.html">点击注册</a></p>
+</div>
+
+<script type="module" src="js/login.js"></script>
+
+</body>
+</html>

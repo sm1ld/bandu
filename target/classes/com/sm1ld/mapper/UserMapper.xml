@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.sm1ld.mapper.UserMapper">
+    <!-- 根据用户名、电话或邮箱查找用户 -->
+    <select id="findByParams" parameterType="map" resultType="com.sm1ld.pojo.User">
+        SELECT * FROM user
+        <where>
+            <if test="username != null">AND username = #{username}</if>
+            <if test="phoneNumber != null">AND phone_number = #{phoneNumber}</if>
+            <if test="email != null">AND email = #{email}</if>
+        </where>
+    </select>
+
+    <!-- 根据用户名、电话或邮箱动态查找非当前用户 -->
+    <select id="findByParamsExId" parameterType="map" resultType="com.sm1ld.pojo.User">
+        SELECT * FROM user
+        <where>
+            <if test="username != null">AND username = #{username}</if>
+            <if test="phoneNumber != null">AND phone_number = #{phoneNumber}</if>
+            <if test="email != null">AND email = #{email}</if>
+        </where>
+        AND id != #{id} <!-- 排除当前用户 -->
+    </select>
+
+    <select id="findUserWithItems" resultMap="UserItemResultMap">
+        SELECT u.id AS user_id, u.username, u.password, u.address, u.phoneNumber, u.email, u.role, u.createdAt, u.updatedAt,
+               i.id AS item_id, i.title AS item_title, i.description AS item_description, i.price AS item_price,
+               i.quantity AS item_quantity, i.categoryId AS item_categoryId, i.sellerId AS item_sellerId,
+               i.imageUrl AS item_imageUrl, i.status AS item_status, i.createdAt AS item_createdAt, i.updatedAt AS item_updatedAt,
+               i.isDelete AS item_isDelete
+        FROM user u
+                 LEFT JOIN item i ON u.id = i.sellerId
+        WHERE u.id = #{userId}
+    </select>
+    <resultMap id="UserItemResultMap" type="com.sm1ld.pojo.User">
+        <!-- 映射 User 类的字段 -->
+        <id property="id" column="user_id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="address" column="address"/>
+        <result property="phoneNumber" column="phoneNumber"/>
+        <result property="email" column="email"/>
+        <result property="role" column="role"/>
+        <result property="createdAt" column="createdAt"/>
+        <result property="updatedAt" column="updatedAt"/>
+
+        <!-- 映射商品列表 -->
+        <collection property="items" ofType="com.sm1ld.pojo.Item">
+            <result property="id" column="item_id"/>
+            <result property="title" column="item_title"/>
+            <result property="description" column="item_description"/>
+            <result property="price" column="item_price"/>
+            <result property="quantity" column="item_quantity"/>
+            <result property="categoryId" column="item_categoryId"/>
+            <result property="sellerId" column="item_sellerId"/>
+            <result property="imageUrl" column="item_imageUrl"/>
+            <result property="status" column="item_status"/>
+            <result property="createdAt" column="item_createdAt"/>
+            <result property="updatedAt" column="item_updatedAt"/>
+            <result property="isDelete" column="item_isDelete"/>
+        </collection>
+    </resultMap>
+
+
+
+</mapper>
