@@ -1,5 +1,4 @@
-import {displayLoginStatus} from './status.js';
-
+import { displayLoginStatus } from './status.js';
 // 获取购物车数据
 async function fetchCartItems() {
     try {
@@ -45,9 +44,8 @@ function renderCartItems(cartItems) {
             <div class="item-info">
                 <div class="item-title">${product.title}</div>
                 <div class="item-price">￥${product.price}</div>
-                <div class="item-sellerId">卖家ID: ${product.sellerId}</div>
                 <div class="item-number">数量: ${item.number}</div>
-                <div class="item-subTotal">小计: ￥${item.subTotal}</div>
+                <div class="item-sellerId">卖家ID: ${product.sellerId}</div>
             </div>
             <div class="item-actions">
                 <button class="update-number-btn" data-item-id="${product.id}">更新数量</button>
