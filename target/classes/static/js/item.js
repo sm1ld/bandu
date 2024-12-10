@@ -34,7 +34,6 @@ function loadItemDetails(itemId) {
         .then(data => {
             if (data.code === 1) {
                 const item = data.data; // 获取商品数据
-
                 // 获取页面容器元素
                 const itemDetail = document.getElementById('item-detail');
 

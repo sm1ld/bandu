@@ -1,0 +1,100 @@
+/* 购物车主体部分 */
+main {
+    max-width: 1200px; /* 最大宽度设置 */
+    margin: 20px auto; /* 居中显示 */
+    padding: 20px; /* 设置内边距 */
+}
+
+/* 购物车容器 */
+#cart-list {
+    background-color: white; /* 设置背景色为白色 */
+    padding: 20px; /* 设置内边距 */
+    border-radius: 10px; /* 圆角效果 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+}
+
+#cart-list h2 {
+    text-align: center; /* 居中显示标题 */
+    margin-bottom: 30px; /* 设置下边距 */
+    font-size: 24px; /* 设置字体大小 */
+    font-weight: bold; /* 设置加粗 */
+}
+
+/* 商品列表 */
+.cart-items-list {
+    display: flex; /* 使用flex布局 */
+    flex-direction: column; /* 列方向排列 */
+    gap: 20px; /* 设置商品之间的间隔 */
+    align-items: center; /* 居中排列 */
+}
+
+/* 单个商品的样式 */
+.cart-item {
+    width: 80%; /* 设置商品宽度为父容器的80% */
+    max-width: 600px; /* 最大宽度为600px */
+    background-color: #ffffff; /* 设置商品背景为白色 */
+    padding: 15px; /* 设置内边距 */
+    display: flex; /* 使用flex布局 */
+    justify-content: space-between; /* 商品信息与按钮分开显示 */
+    border-radius: 8px; /* 设置圆角 */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* 设置阴影 */
+    transition: transform 0.3s; /* 设置悬停时放大的过渡效果 */
+}
+
+.cart-item:hover {
+    transform: scale(1.02); /* 鼠标悬停时放大 */
+}
+
+/* 商品图片样式 */
+.cart-item img {
+    width: 120px; /* 设置图片宽度 */
+    height: 120px; /* 设置图片高度 */
+    object-fit: cover; /* 保持图片比例，裁剪超出的部分 */
+    border-radius: 8px; /* 设置圆角 */
+}
+
+/* 商品信息样式 */
+.cart-item .item-info {
+    flex-grow: 1; /* 使商品信息部分自适应增长 */
+    margin-left: 15px; /* 设置与图片的间距 */
+}
+
+.cart-item .item-info .item-title {
+    font-size: 18px; /* 设置商品标题字体大小 */
+    font-weight: bold; /* 设置加粗 */
+    color: #333; /* 设置文字颜色 */
+}
+
+.cart-item .item-info .item-price {
+    font-size: 16px; /* 设置商品价格字体大小 */
+    color: #f60; /* 设置价格为橙色 */
+}
+
+.cart-item .item-info .item-quantity {
+    margin-top: 10px; /* 设置商品数量与价格之间的间距 */
+}
+
+/*按钮样式 */
+.cart-item button {
+    padding: 8px 15px; /* 设置按钮内边距 */
+    background-color: black; /* 设置按钮背景色 */
+    color: white; /* 设置按钮文字颜色 */
+    border: none; /* 去除按钮边框 */
+    border-radius: 5px; /* 设置圆角 */
+    cursor: pointer; /* 鼠标变为指针 */
+    transition: background-color 0.3s; /* 添加过渡效果 */
+}
+
+.cart-item button:hover {
+    background-color: black; /* 悬停时背景不变 */
+}
+
+#createOrderBtn {
+    padding: 8px 15px; /* 设置按钮内边距 */
+    background-color: black; /* 设置按钮背景色 */
+    color: white; /* 设置按钮文字颜色 */
+    border: none; /* 去除按钮边框 */
+    border-radius: 5px; /* 设置圆角 */
+    cursor: pointer; /* 鼠标变为指针 */
+    transition: background-color 0.3s; /* 添加过渡效果 */
+}

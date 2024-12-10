@@ -1,0 +1,26 @@
+header {
+    background-color: #333; /* 设置头部背景色 */
+    color: white; /* 设置头部文字颜色 */
+    padding: 10px 0; /* 设置上下内边距 */
+    text-align: center; /* 居中文本 */
+}
+
+header h1 {
+    margin: 0; /* 去除标题的外边距 */
+    font-size: 2rem; /* 设置字体大小 */
+}
+
+nav {
+    margin-top: 10px; /* 设置导航条与顶部的间隔 */
+}
+
+nav a {
+    color: white; /* 设置导航链接文字为白色 */
+    text-decoration: none; /* 去除下划线 */
+    margin: 0 10px; /* 设置每个链接的左右间距 */
+    font-size: 1.1rem; /* 设置字体大小 */
+}
+
+nav a:hover {
+    text-decoration: underline; /* 鼠标悬停时显示下划线 */
+}

@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>商品详情</title>
     <link rel="stylesheet" href="css/style.css">
+    <link href="css/itemList.css" rel="stylesheet">
+    <link href="css/modal.css" rel="stylesheet">
 </head>
 <body>
 <header>
@@ -22,7 +24,7 @@
 </header>
 <!-- 添加商品按钮 -->
 <button class="btn" id="addItemBtn">添加商品</button>
-<!-- 商品列表，动态加载 -->
+
 <div class="itemList" id="item-list">
     <!-- 商品信息将通过 JavaScript 动态添加到这里 -->
 </div>
@@ -34,28 +36,20 @@
         <form id="addItemForm">
             <label for="itemTitle">商品标题:</label>
             <input type="text" id="itemTitle" name="title" required><br><br>
-
             <label for="itemDescription">描述:</label>
             <textarea id="itemDescription" name="description" required></textarea><br><br>
-
             <label for="itemPrice">价格:</label>
             <input type="number" id="itemPrice" name="price" required><br><br>
-
             <label for="itemQuantity">库存:</label>
             <input type="number" id="itemQuantity" name="quantity" required><br><br>
-
             <label for="itemCategoryId">分类：</label>
             <input type="text" id="itemCategoryId" name="categoryId" required><br><br>
-
             <label for="itemImage">图片URL:</label>
             <input type="text" id="itemImage" name="imageUrl" required><br><br>
-
             <button type="submit">提交</button>
         </form>
     </div>
 </div>
-
-
 <script type="module" src="js/myItem.js"></script>
 </body>
 </html>

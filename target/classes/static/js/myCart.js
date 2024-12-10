@@ -177,7 +177,7 @@ async function createOrder() {
             },
             body: JSON.stringify({
                 total: total, // 传递总价
-                })
+            })
         });
 
         const data = await response.json();

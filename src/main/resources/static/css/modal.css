@@ -1,0 +1,90 @@
+/* 模态框样式 */
+.modal {
+    display: none; /* 默认隐藏模态框 */
+    position: fixed; /* 设置为固定定位 */
+    z-index: 1000; /* 确保模态框显示在页面最上层 */
+    left: 0; /* 定位到左边 */
+    top: 0; /* 定位到顶部 */
+    width: 100%; /* 满屏宽度 */
+    height: 100%; /* 满屏高度 */
+    background-color: rgba(0, 0, 0, 0.4); /* 设置半透明背景 */
+    overflow: auto; /* 防止模态框内容溢出 */
+}
+
+/* 模态框内容样式 */
+.modal-content {
+    background-color: #fff; /* 设置背景色为白色 */
+    margin: auto; /* 水平居中 */
+    padding: 20px; /* 设置内边距 */
+    border-radius: 10px; /* 设置圆角 */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 设置阴影 */
+    width: 100%; /* 宽度占满父元素 */
+    max-width: 500px; /* 最大宽度500px */
+}
+
+/* 输入框样式 */
+.modal-content .form-group {
+    margin: 10px 0; /* 设置每个输入框的上下间距 */
+}
+
+.modal-content label {
+    display: block; /* 设置为块级元素 */
+    font-size: 1rem; /* 设置字体大小 */
+    color: #333; /* 设置文字颜色 */
+    margin-bottom: 5px; /* 设置标签与输入框之间的间距 */
+}
+
+.modal-content input,
+.modal-content textarea {
+    width: 100%; /* 输入框宽度占满 */
+    padding: 12px; /* 内边距 */
+    border-radius: 8px; /* 圆角效果 */
+    border: 1px solid #ccc; /* 边框颜色 */
+    background-color: #f9f9f9; /* 浅灰背景 */
+    color: #333; /* 文字颜色 */
+    font-size: 1rem; /* 字体大小 */
+    box-sizing: border-box; /* 包含内边距和边框在内的总宽度 */
+}
+
+.modal-content input:focus,
+.modal-content textarea:focus {
+    border-color: #333; /* 聚焦时边框变为黑色 */
+    outline: none; /* 去除默认的聚焦边框 */
+    background-color: #fff; /* 聚焦时背景色变为白色 */
+}
+
+/* 提交按钮样式 */
+.modal-content button {
+    width: 100%; /* 按钮宽度占满 */
+    padding: 12px; /* 内边距 */
+    background-color: #333; /* 设置背景色 */
+    color: white; /* 设置文字颜色 */
+    border: none; /* 去除边框 */
+    border-radius: 8px; /* 圆角效果 */
+    font-size: 1rem; /* 字体大小 */
+    cursor: pointer; /* 鼠标变为指针 */
+    font-weight: bold; /* 加粗 */
+    transition: background-color 0.3s ease; /* 添加过渡效果 */
+}
+
+.modal-content button:hover {
+    background-color: #555; /* 悬停时背景变为浅灰色 */
+}
+
+/* 关闭按钮样式 */
+.close {
+    color: #aaa; /* 设置关闭按钮颜色 */
+    font-size: 28px; /* 设置字体大小 */
+    font-weight: bold; /* 设置加粗 */
+    cursor: pointer; /* 鼠标变为指针 */
+    position: absolute; /* 设置为绝对定位 */
+    top: 10px; /* 设置与顶部的间距 */
+    right: 10px; /* 设置与右侧的间距 */
+}
+
+.close:hover,
+.close:focus {
+    color: black; /* 悬停或聚焦时变为黑色 */
+    text-decoration: none; /* 去除下划线 */
+    cursor: pointer; /* 鼠标变为指针 */
+}

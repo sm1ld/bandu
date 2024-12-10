@@ -4,18 +4,17 @@
 <mapper namespace="com.sm1ld.mapper.CartMapper">
 
     <select id="findByUid" resultMap="CartItemResultMap">
-        SELECT
-            c.id AS cart_id,
-            c.userId AS cart_userId,
-            c.itemId AS cart_itemId,
-            c.number AS cart_quantity,
-            c.createdAt AS cart_addedAt,
-            i.title AS item_title,
-            i.imageUrl AS item_imageUrl,
-            i.price AS item_price,
-            i.quantity AS item_stock,
-            i.sellerId AS item_sellerId,
-            i.price * c.number AS cart_subTotal
+        SELECT c.id               AS cart_id,
+               c.userId           AS cart_userId,
+               c.itemId           AS cart_itemId,
+               c.number           AS cart_quantity,
+               c.createdAt        AS cart_addedAt,
+               i.title            AS item_title,
+               i.imageUrl         AS item_imageUrl,
+               i.price            AS item_price,
+               i.quantity         AS item_stock,
+               i.sellerId         AS item_sellerId,
+               i.price * c.number AS cart_subTotal
         FROM cart c
                  LEFT JOIN item i ON c.itemId = i.id
         WHERE c.userId = #{userId}

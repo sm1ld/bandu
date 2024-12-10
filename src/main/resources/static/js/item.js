@@ -1,5 +1,5 @@
 //item.js
-import { displayLoginStatus } from './status.js';
+import {displayLoginStatus} from './status.js';
 
 // 在商品详情页加载时，从 sessionStorage 获取 itemId
 const itemId = sessionStorage.getItem('itemId');
@@ -34,7 +34,6 @@ function loadItemDetails(itemId) {
         .then(data => {
             if (data.code === 1) {
                 const item = data.data; // 获取商品数据
-
                 // 获取页面容器元素
                 const itemDetail = document.getElementById('item-detail');
 

@@ -1,0 +1,54 @@
+
+/* 商品部分 */
+.itemList {
+    display: flex; /* 使用flex布局 */
+    flex-wrap: wrap; /* 换行显示 */
+    justify-content: left; /* 左对齐排列 */
+    gap: 20px; /* 商品之间的间隔 */
+    margin-top: 20px; /* 设置顶部间距 */
+}
+
+.item {
+    background-color: #fff; /* 设置商品背景为白色 */
+    border: 1px solid #ddd; /* 设置商品的边框 */
+    padding: 15px; /* 设置商品内边距 */
+    border-radius: 8px; /* 设置圆角 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05); /* 设置阴影 */
+    width: calc(20% - 20px); /* 每行最多显示五个商品，减去间隔 */
+    box-sizing: border-box; /* 包括内边距和边框在内的总宽度 */
+    text-align: center; /* 居中显示内容 */
+}
+
+.item img {
+    width: 100%; /* 图片宽度占满父元素 */
+    height: auto; /* 高度自适应 */
+    max-width: 100px; /* 设置最大宽度 */
+    max-height: 100px; /* 设置最大高度 */
+    display: block; /* 设置为块级元素 */
+    margin: 0 auto; /* 设置自动左右外边距，使其居中 */
+}
+
+.item h3 {
+    font-size: 1.4rem; /* 设置商品标题字体大小 */
+    margin-bottom: 10px; /* 设置下边距 */
+}
+
+.item p {
+    font-size: 1rem; /* 设置商品描述字体大小 */
+    color: #555; /* 设置商品描述颜色 */
+}
+
+.item .item-price {
+    color: #2e8b57; /* 设置商品价格颜色 */
+    font-weight: bold; /* 设置价格为加粗 */
+}
+
+.item .item-status {
+    font-style: italic; /* 设置商品状态为斜体 */
+    color: #555; /* 设置商品状态颜色 */
+}
+
+.item .item-date {
+    font-size: 0.9rem; /* 设置商品日期字体大小 */
+    color: #777; /* 设置日期颜色 */
+}
