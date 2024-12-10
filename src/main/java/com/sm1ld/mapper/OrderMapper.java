@@ -11,7 +11,7 @@ public interface OrderMapper {
     // 根据用户ID查询订单
     List<Order> getOrderByUid(@Param("userId") int userId);
     // 插入订单
-    void insertOrder(@Param("order") Order order);
+    void insertOrder(Order order);
 
     @Select("SELECT * FROM allorder WHERE  orderId = #{orderId}")
     Order getOrderById(Integer orderId);
@@ -23,6 +23,6 @@ public interface OrderMapper {
     // 更新订单信息
     @Update("UPDATE allorder SET orderStatus = #{orderStatus}, payStatus = #{payStatus}, " +
             " total = #{total}, sendDate = #{sendDate}, sentDate = #{sentDate} WHERE orderId = #{orderId} AND userId=#{“userId}")
-    void updateOrder(@Param("order") Order order, @Param("userId") Integer userId);
+    void updateOrder(Order order, @Param("userId") Integer userId);
 
 }

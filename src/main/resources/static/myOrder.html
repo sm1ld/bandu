@@ -3,207 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>创建订单</title>
-  <style>
-    /* 页面样式 */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #f4f4f4;
-      border-radius: 10px;
-    }
-    .form-group {
-      margin-bottom: 15px;
-    }
-    .form-group label {
-      display: block;
-      font-weight: bold;
-    }
-    .form-group input, .form-group select, .form-group textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    .order-item-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 20px;
-    }
-    .order-item-table th, .order-item-table td {
-      padding: 10px;
-      border: 1px solid #ddd;
-      text-align: center;
-    }
-    .btn {
-      padding: 10px 20px;
-      background-color: #28a745;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .btn:hover {
-      background-color: #218838;
-    }
-    .error-message {
-      color: red;
-    }
-  </style>
+  <title>我的订单</title>
+  <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
-
-<div class="container">
-  <h2>创建订单</h2>
-
-  <!-- 商品列表 -->
-  <table class="order-item-table" id="orderItemsTable">
-    <thead>
-    <tr>
-      <th>商品ID</th>
-      <th>商品名称</th>
-      <th>数量</th>
-      <th>单价</th>
-      <th>小计</th>
-    </tr>
-    </thead>
-    <tbody>
-    <!-- 动态填充商品信息 -->
-    </tbody>
-  </table>
-
-  <!-- 收货地址 -->
-  <div class="form-group">
-    <label for="address">收货地址</label>
-    <textarea id="address" placeholder="请输入收货地址" required></textarea>
-  </div>
-
-  <!-- 支付方式 -->
-  <div class="form-group">
-    <label for="payMethod">支付方式</label>
-    <select id="payMethod" required>
-      <option value="1">支付宝</option>
-      <option value="2">微信支付</option>
-      <option value="3">信用卡</option>
-    </select>
-  </div>
-
-  <!-- 提交按钮 -->
-  <button class="btn" id="submitOrder">提交订单</button>
-
-  <!-- 错误信息显示 -->
-  <p class="error-message" id="errorMessage"></p>
-</div>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // 获取存储的 token
-    const token = sessionStorage.getItem('token');
-
-    // 校验 token 是否存在
-    if (!token) {
-      window.location.href = 'login.html';  // 跳转到登录页面
-      return;
-    }
-
-    // 解码 token 获取用户 ID
-    const decoded = decodeJwt(token);
-    if (!decoded) {
-      document.querySelector('#errorMessage').innerText = '解密 token 失败';
-      return;
-    }
-    const userId = decoded.id;  // 获取当前用户ID，用作 userId
-
-    // 绑定提交订单按钮
-    document.querySelector('#submitOrder').addEventListener('click', function() {
-      const address = document.querySelector('#address').value;
-      const payMethod = document.querySelector('#payMethod').value;
-
-      // 校验输入
-      if (!address || !payMethod) {
-        document.querySelector('#errorMessage').innerText = '请填写所有必填项';
-        return;
-      }
-
-      // 假设订单商品已经在前端渲染或获取（如通过本地存储/其他方式）
-      const orderItems = [
-        { itemId: 1, quantity: 2, price: 100 },
-        { itemId: 2, quantity: 1, price: 150 }
-      ];
-
-      // 计算订单总金额
-      const total = orderItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-
-      // 构建订单数据
-      const order = {
-        userId,
-        orderStatus: 1,  // 假设初始状态为未支付
-        payStatus: 0,    // 支付状态，0代表未支付
-        payMethod,
-        total,
-        address,
-        orderDate: new Date().toISOString(),
-        sendDate: new Date().toISOString(),  // 假设预计发货时间为当前时间
-        sentDate: null,  // 实际发货时间为空
-      };
-
-      // 提交订单
-      fetch(`http://127.0.0.1:8081/order/${userId}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + token  // 添加 Authorization 头部
-        },
-        body: JSON.stringify({ order, orderItem: orderItems })  // 请求体传入订单和商品信息
-      })
-              .then(response => response.json())  // 解析响应为 JSON
-              .then(data => {
-                if (data.success) {
-                  alert('订单创建成功');
-                  // 可以重置表单或跳转到订单详情页
-                } else {
-                  document.querySelector('#errorMessage').innerText = '订单创建失败';
-                }
-              })
-              .catch(error => {
-                console.error(error);
-                document.querySelector('#errorMessage').innerText = '网络错误，请稍后再试';
-              });
-    });
-
-    // 解码 JWT token
-    function decodeJwt(token) {
-      if (!token || token.split('.').length !== 3) {
-        console.error('Invalid JWT token');
-        return null;
-      }
-
-      const base64Url = token.split('.')[1];
-      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-      const paddedBase64 = base64.padEnd(Math.ceil(base64.length / 4) * 4, '=');
-
-      try {
-        const jsonPayload = decodeURIComponent(atob(paddedBase64).split('').map(function(c) {
-          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
-        return JSON.parse(jsonPayload);
-      } catch (error) {
-        console.error('Failed to decode JWT:', error);
-        return null;
-      }
-    }
-  });
-</script>
+<header>
+  <h1>我的订单</h1>
+  <nav>
+    <a href="index.html">首页</a> |
+    <a href="login.html">登录</a> |
+    <a href="register.html">注册</a> |
+    <a href="profile.html" id="profileLink">个人中心</a> |
+    <a href="myItem.html">我的商品</a> |
+    <a href="myCart.html">我的购物车</a> |
+    <a href="myOrder.html">我的订单</a> |
+    <span id="loginStatus"></span>
+  </nav>
+</header>
 
 
+<section id="orders-section">
+  <h2>当前订单</h2>
+  <div id="orders-list"></div>
+</section>
 
-
+<script src="js/myOrder.js" type="module"></script>
 </body>
 </html>

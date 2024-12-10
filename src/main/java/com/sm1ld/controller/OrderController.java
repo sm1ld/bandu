@@ -30,12 +30,14 @@ public class OrderController {
 
     // 创建订单
     @PostMapping("/create")
-    public Result createOrder(HttpServletRequest request) {
+    public Result createOrder(HttpServletRequest request, @RequestBody Order order) {
         // 获取当前用户的 ID
         Integer userId = JwtUtils.getCurrentUserId(request);
-
+        order.setUserId(userId);
         try {
-            orderService.createOrder(userId);
+            System.out.println("----!!!!!!" + order);
+            orderService.createOrder(order);
+
             return Result.success("订单创建成功");
         } catch (Exception e) {
             log.error("订单创建失败: {}", e.getMessage());

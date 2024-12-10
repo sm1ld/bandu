@@ -297,6 +297,7 @@ main {
     background-color: white;
     padding: 20px;
     border-radius: 10px;
+
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -374,4 +375,14 @@ main {
 
 .cart-item button:hover {
     background-color: black;
+}
+
+#createOrderBtn {
+    padding: 8px 15px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }

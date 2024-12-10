@@ -11,7 +11,7 @@ public interface OrderService {
     List<Order> getOrderByUid(int userId);
 
     // 创建订单
-    void createOrder(Integer userId);
+    void createOrder(Order order);
 
     // 查询订单详情
     Order getOrderDetails(Integer orderId);

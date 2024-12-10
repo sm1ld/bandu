@@ -4,9 +4,18 @@
 <mapper namespace="com.sm1ld.mapper.CartMapper">
 
     <select id="findByUid" resultMap="CartItemResultMap">
-        SELECT c.id AS cart_id, c.itemId AS cart_itemId, c.number AS cart_quantity,c.createdAt As cart_addedAt,
-               i.title AS item_title,i.imageUrl AS item_imageUrl, i.price AS item_price, i.quantity AS item_stock,
-                i.sellerId AS item_sellerId
+        SELECT
+            c.id AS cart_id,
+            c.userId AS cart_userId,
+            c.itemId AS cart_itemId,
+            c.number AS cart_quantity,
+            c.createdAt AS cart_addedAt,
+            i.title AS item_title,
+            i.imageUrl AS item_imageUrl,
+            i.price AS item_price,
+            i.quantity AS item_stock,
+            i.sellerId AS item_sellerId,
+            i.price * c.number AS cart_subTotal
         FROM cart c
                  LEFT JOIN item i ON c.itemId = i.id
         WHERE c.userId = #{userId}
@@ -19,6 +28,7 @@
         <result property="itemId" column="cart_itemId"/>
         <result property="number" column="cart_quantity"/>
         <result property="createdAt" column="cart_addedAt"/>
+        <result property="subTotal" column="cart_subTotal"/>
 
         <!-- 映射商品简化信息 -->
         <association property="items" javaType="com.sm1ld.pojo.Item">
@@ -30,6 +40,7 @@
             <result property="quantity" column="item_stock"/>
         </association>
     </resultMap>
+
     <select id="getCartItems" resultType="com.sm1ld.pojo.Cart">
         SELECT
             c.id AS cartId,

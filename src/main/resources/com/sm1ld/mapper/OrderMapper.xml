@@ -47,7 +47,7 @@
     <!-- 插入订单 -->
     <insert id="insertOrder" parameterType="com.sm1ld.pojo.Order">
         INSERT INTO allorder (userId, total, orderStatus, payStatus, createdAt, sendDate)
-        VALUES (#{userId}, #{total}, 0, 0, now(), CURRENT_TIMESTAMP + INTERVAL 1 DAY)
+        VALUES (#{userId}, #{total}, 0, 0, now(), now() + INTERVAL 1 DAY)
     </insert>
 
     <insert id="insertOrderItems" parameterType="java.util.List">
