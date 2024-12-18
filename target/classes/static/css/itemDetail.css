@@ -5,9 +5,9 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 设置阴影 */
     max-width: 800px; /* 设置最大宽度 */
     width: 100%; /* 宽度占满父元素 */
-    margin: 0 auto;  /* 居中显示 */
-    text-align: center;  /* 内容居中 */
-    color: #333;  /* 设置深色文字 */
+    margin: 0 auto; /* 居中显示 */
+    text-align: center; /* 内容居中 */
+    color: #333; /* 设置深色文字 */
 }
 
 .itemDetail img {

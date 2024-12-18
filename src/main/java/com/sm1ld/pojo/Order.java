@@ -21,7 +21,7 @@ public class Order {
     private LocalDateTime sentDate;  // 实际发货时间
     private LocalDateTime createdAt;  // 实际发货时间
     private LocalDateTime updatedAt;  // 实际发货时间
-    private List<Item> orderItem= new ArrayList<>();
+    private List<OrderItem> orderItem = new ArrayList<>();
 
 }
 

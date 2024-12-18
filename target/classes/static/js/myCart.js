@@ -145,7 +145,6 @@ function openUpdateNumberModal(itemId) {
 // 假设这里是保存勾选状态的对象，key 是商品的 ID，value 是勾选状态（true 或 false）
 let itemCheckedStatus = {};
 
-// 创建订单
 async function createOrder() {
     try {
         const token = sessionStorage.getItem('token');
@@ -154,20 +153,33 @@ async function createOrder() {
             window.location.href = 'login.html'; // 跳转到登录页面
             return;
         }
+
         // 获取购物车数据
         const cartItems = await fetchCartItems();
         let total = 0;
+        const orderItemList = [];
+
         // 只计算勾选的商品总价
         cartItems.forEach(item => {
             const product = item.items[0];
             if (itemCheckedStatus[product.id]) { // 只计算被勾选的商品
-                total += item.subTotal; // 加上每个商品的小计
+                const subTotal = item.subTotal; // 小计
+                total += subTotal; // 加上每个商品的小计
+
+                // 构建订单商品列表
+                orderItemList.push({
+                    itemId: product.id,
+                    number: item.number, // 商品数量
+                    subTotal: subTotal, // 商品小计
+                });
             }
         });
+
         if (total <= 0) {
             alert('请选择商品后再创建订单');
             return;
         }
+
         // 创建订单请求
         const response = await fetch('http://localhost:8081/order/create', {
             method: 'POST',
@@ -177,6 +189,7 @@ async function createOrder() {
             },
             body: JSON.stringify({
                 total: total, // 传递总价
+                orderItem: orderItemList, // 传递商品列表
             })
         });
 
@@ -186,7 +199,6 @@ async function createOrder() {
             window.location.href = 'myOrder.html'; // 跳转到订单页面
         } else {
             alert('订单创建失败');
-
         }
     } catch (error) {
         console.error('创建订单失败:', error);

@@ -74,27 +74,27 @@ main {
     margin-top: 10px; /* 设置商品数量与价格之间的间距 */
 }
 
-/* 按钮样式 */
-/*.cart-item button {*/
-/*    padding: 8px 15px; !* 设置按钮内边距 *!*/
-/*    background-color: black; !* 设置按钮背景色 *!*/
-/*    color: white; !* 设置按钮文字颜色 *!*/
-/*    border: none; !* 去除按钮边框 *!*/
-/*    border-radius: 5px; !* 设置圆角 *!*/
-/*    cursor: pointer; !* 鼠标变为指针 *!*/
-/*    transition: background-color 0.3s; !* 添加过渡效果 *!*/
-/*}*/
+/*按钮样式 */
+.cart-item button {
+    padding: 8px 15px; /* 设置按钮内边距 */
+    background-color: black; /* 设置按钮背景色 */
+    color: white; /* 设置按钮文字颜色 */
+    border: none; /* 去除按钮边框 */
+    border-radius: 5px; /* 设置圆角 */
+    cursor: pointer; /* 鼠标变为指针 */
+    transition: background-color 0.3s; /* 添加过渡效果 */
+}
 
-/*.cart-item button:hover {*/
-/*    background-color: black; !* 悬停时背景不变 *!*/
-/*}*/
+.cart-item button:hover {
+    background-color: black; /* 悬停时背景不变 */
+}
 
-/*#createOrderBtn {*/
-/*    padding: 8px 15px; !* 设置按钮内边距 *!*/
-/*    background-color: black; !* 设置按钮背景色 *!*/
-/*    color: white; !* 设置按钮文字颜色 *!*/
-/*    border: none; !* 去除按钮边框 *!*/
-/*    border-radius: 5px; !* 设置圆角 *!*/
-/*    cursor: pointer; !* 鼠标变为指针 *!*/
-/*    transition: background-color 0.3s; !* 添加过渡效果 *!*/
-/*}*/
+#createOrderBtn {
+    padding: 8px 15px; /* 设置按钮内边距 */
+    background-color: black; /* 设置按钮背景色 */
+    color: white; /* 设置按钮文字颜色 */
+    border: none; /* 去除按钮边框 */
+    border-radius: 5px; /* 设置圆角 */
+    cursor: pointer; /* 鼠标变为指针 */
+    transition: background-color 0.3s; /* 添加过渡效果 */
+}

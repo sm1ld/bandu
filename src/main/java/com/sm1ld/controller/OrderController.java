@@ -28,6 +28,18 @@ public class OrderController {
         return Result.success(orders);
     }
 
+    //查询订单详情
+    @GetMapping("/{orderId}")
+    public Result GetOrder(@PathVariable Integer orderId, HttpServletRequest request) {
+        Integer userId = JwtUtils.getCurrentUserId(request);
+        try {
+            Order order = orderService.getOrderDetails(orderId);
+            return Result.success(order);
+        } catch (Exception e) {
+            log.error("订单查询失败: {}", e.getMessage());
+            return Result.error("订单详情查询失败");
+        }
+    }
     // 创建订单
     @PostMapping("/create")
     public Result createOrder(HttpServletRequest request, @RequestBody Order order) {
@@ -35,9 +47,7 @@ public class OrderController {
         Integer userId = JwtUtils.getCurrentUserId(request);
         order.setUserId(userId);
         try {
-            System.out.println("----!!!!!!" + order);
             orderService.createOrder(order);
-
             return Result.success("订单创建成功");
         } catch (Exception e) {
             log.error("订单创建失败: {}", e.getMessage());

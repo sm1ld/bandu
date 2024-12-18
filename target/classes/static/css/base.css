@@ -7,7 +7,7 @@ body {
 
 h2 {
     text-align: center; /* 居中显示 */
-    color: #333;  /* 设置深色文字 */
+    color: #333; /* 设置深色文字 */
     font-size: 1.8rem; /* 设置字体大小 */
     margin-bottom: 20px; /* 设置下边距 */
     font-weight: 700; /* 设置加粗 */

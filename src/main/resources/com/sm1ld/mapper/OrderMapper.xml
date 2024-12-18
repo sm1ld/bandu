@@ -45,24 +45,60 @@
     </resultMap>
 
     <!-- 插入订单 -->
-    <insert id="insertOrder" parameterType="com.sm1ld.pojo.Order">
+    <insert id="insertOrder" useGeneratedKeys="true" keyProperty="orderId">
         INSERT INTO allorder (userId, total, orderStatus, payStatus, createdAt, sendDate)
         VALUES (#{userId}, #{total}, 0, 0, now(), now() + INTERVAL 1 DAY)
     </insert>
 
-    <insert id="insertOrderItems" parameterType="java.util.List">
-        <foreach collection="orderItemList" item="orderItem" index="index" open="" separator="," close="">
-            (#{orderItem.orderId}, #{orderItem.itemId}, #{orderItem.quantity}, #{orderItem.price}, #{orderItem.subTotal})
+
+    <insert id="insertOrderItems">
+        INSERT INTO orderitem (orderId, itemId, number, subtotal, createdAt, updatedAt)
+        VALUES
+        <foreach collection="orderItems" item="orderItem" separator=",">
+            (#{orderItem.orderId}, #{orderItem.itemId}, #{orderItem.number}, #{orderItem.subTotal}, now(), now())
         </foreach>
     </insert>
 
 
     <!-- 根据订单ID查询订单详细信息（订单 + 商品） -->
-<!--    <select id="selectOrderById" resultMap="orderWithItems" parameterType="Long">-->
-<!--        SELECT * FROM `order` o-->
-<!--    #     LEFT JOIN order_item oi ON o.orderId = oi.orderId-->
-<!--        WHERE o.orderId = #{orderId};-->
-<!--    </select>-->
+    <select id="getOrderDetails" resultMap="orderWithItem" parameterType="Integer">
+        SELECT o.orderId,
+        o.userId,
+        o.orderStatus,
+        o.payStatus,
+        o.total,
+        o.sendDate,
+        o.sentDate,
+        o.createdAt,
+        o.updatedAt,
+        oi.itemId,
+        oi.number AS quantity, <!-- 商品数量 -->
+        i.price,
+        i.title AS itemTitle, <!-- 商品名称 -->
+        i.imageUrl AS itemImage, <!-- 商品图片 -->
+        (oi.number * i.price) AS subTotal <!-- 商品小计 -->
+        FROM allorder o
+        LEFT JOIN orderitem oi ON o.orderId = oi.orderId
+        LEFT JOIN item i ON oi.itemId = i.id
+        WHERE o.orderId = #{orderId};
+    </select>
+    <!-- ResultMap，映射查询结果（订单与商品） -->
+    <resultMap id="orderWithItem" type="com.sm1ld.pojo.Order">
+        <id property="orderId" column="orderId"/>
+        <result property="userId" column="userId"/>
+        <result property="total" column="total"/>
+        <result property="createdAt" column="createdAt"/>
+        <!-- 订单商品部分 -->
+        <collection property="orderItem" ofType="com.sm1ld.pojo.Item">
+            <id property="id" column="itemId"/>
+            <result property="title" column="itemTitle"/> <!-- 商品名称 -->
+            <result property="imageUrl" column="itemImage"/> <!-- 商品图片 -->
+            <result property="quantity" column="quantity"/> <!-- 商品数量 -->
+            <result property="price" column="price"/> <!-- 商品价格 -->
+            <result property="subTotal" column="subTotal"/> <!-- 小计 -->
+        </collection>
+    </resultMap>
+
 
     <!-- 根据订单ID删除订单 -->
 <!--    <delete id="deleteOrderById" parameterType="Long">-->

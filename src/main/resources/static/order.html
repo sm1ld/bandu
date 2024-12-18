@@ -1,12 +1,10 @@
-<!--item.html-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>商品详情</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link href="css/itemDetail.css" rel="stylesheet">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>订单详情</title>
+    <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
 <header>
@@ -23,13 +21,12 @@
     </nav>
 </header>
 
-<!--<h2>我的商品</h2>-->
-
-<section id="item-detail" class="itemDetail">
-    <!-- 商品详情将通过 JavaScript 动态填充 -->
+<section id="order-details-section">
+    <h2>订单详情</h2>
+    <div id="order-details"></div>
+    <button id="backBtn">返回我的订单</button>
 </section>
 
-
-<script type="module" src="js/item.js"></script>
+<script src="js/order.js" type="module"></script>
 </body>
 </html>

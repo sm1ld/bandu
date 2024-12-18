@@ -1,7 +1,11 @@
 package com.sm1ld.mapper;
 
 import com.sm1ld.pojo.Order;
-import org.apache.ibatis.annotations.*;
+import com.sm1ld.pojo.OrderItem;
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -13,8 +17,10 @@ public interface OrderMapper {
     // 插入订单
     void insertOrder(Order order);
 
-    @Select("SELECT * FROM allorder WHERE  orderId = #{orderId}")
-    Order getOrderById(Integer orderId);
+    // 插入订单详情
+    void insertOrderItems(List<OrderItem> orderItems);
+
+    Order getOrderDetails(Integer orderId);
 
     // 根据订单ID删除订单
     @Delete("DELETE FROM allorder WHERE orderId = #{orderId} AND userId=#{“userId}")

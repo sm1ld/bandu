@@ -53,23 +53,23 @@
     background-color: #fff; /* 聚焦时背景色变为白色 */
 }
 
-/*!* 提交按钮样式 *!*/
-/*.modal-content button {*/
-/*    width: 100%; !* 按钮宽度占满 *!*/
-/*    padding: 12px; !* 内边距 *!*/
-/*    background-color: #333; !* 设置背景色 *!*/
-/*    color: white; !* 设置文字颜色 *!*/
-/*    border: none; !* 去除边框 *!*/
-/*    border-radius: 8px; !* 圆角效果 *!*/
-/*    font-size: 1rem; !* 字体大小 *!*/
-/*    cursor: pointer; !* 鼠标变为指针 *!*/
-/*    font-weight: bold; !* 加粗 *!*/
-/*    transition: background-color 0.3s ease; !* 添加过渡效果 *!*/
-/*}*/
+/* 提交按钮样式 */
+.modal-content button {
+    width: 100%; /* 按钮宽度占满 */
+    padding: 12px; /* 内边距 */
+    background-color: #333; /* 设置背景色 */
+    color: white; /* 设置文字颜色 */
+    border: none; /* 去除边框 */
+    border-radius: 8px; /* 圆角效果 */
+    font-size: 1rem; /* 字体大小 */
+    cursor: pointer; /* 鼠标变为指针 */
+    font-weight: bold; /* 加粗 */
+    transition: background-color 0.3s ease; /* 添加过渡效果 */
+}
 
-/*.modal-content button:hover {*/
-/*    background-color: #555; !* 悬停时背景变为浅灰色 *!*/
-/*}*/
+.modal-content button:hover {
+    background-color: #555; /* 悬停时背景变为浅灰色 */
+}
 
 /* 关闭按钮样式 */
 .close {

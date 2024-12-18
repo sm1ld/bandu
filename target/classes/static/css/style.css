@@ -20,7 +20,7 @@ header h1 {
 
 h2 {
     text-align: center; /* 居中显示 */
-    color: #333;  /* 设置深色文字 */
+    color: #333; /* 设置深色文字 */
     font-size: 1.8rem; /* 设置字体大小 */
     margin-bottom: 20px; /* 设置下边距 */
     font-weight: 700; /* 设置加粗 */
@@ -73,43 +73,25 @@ nav a:hover {
     color: #333; /* 设置颜色 */
 }
 
-/*.btn {*/
-/*    background-color: #333; !* 设置按钮背景色 *!*/
-/*    color: white; !* 设置按钮文字颜色 *!*/
-/*    border: none; !* 去除边框 *!*/
-/*    padding: 10px 20px; !* 设置内边距 *!*/
-/*    font-size: 1rem; !* 设置字体大小 *!*/
-/*    cursor: pointer; !* 鼠标指针变为点击状态 *!*/
-/*    border-radius: 5px; !* 设置圆角 *!*/
-/*    margin-top: 20px; !* 设置顶部间距 *!*/
-/*    display: block; !* 设置按钮为块级元素 *!*/
-/*    width: 200px; !* 设置按钮宽度 *!*/
-/*    margin-left: auto; !* 左侧自动对齐 *!*/
-/*    margin-right: auto; !* 右侧自动对齐 *!*/
-/*}*/
-
-/*.btn:hover {*/
-/*    background-color: #555; !* 悬停时按钮变色 *!*/
-/*}*/
-/* 按钮统一样式 */
-.btn, .modal-content button, .cart-item button, #createOrderBtn {
-    background-color: black; /* 设置按钮背景色 */
+.btn {
+    background-color: #333; /* 设置按钮背景色 */
     color: white; /* 设置按钮文字颜色 */
-    border: none; /* 去除按钮边框 */
-    padding: 12px 20px; /* 设置内边距 */
+    border: none; /* 去除边框 */
+    padding: 10px 20px; /* 设置内边距 */
     font-size: 1rem; /* 设置字体大小 */
     cursor: pointer; /* 鼠标指针变为点击状态 */
-    border-radius: 8px; /* 设置圆角 */
-    transition: background-color 0.3s ease; /* 悬停时的过渡效果 */
-    font-weight: bold; /* 设置加粗 */
-    display: inline-block; /* 设置为行内块元素 */
-    text-align: center; /* 设置文本居中 */
+    border-radius: 5px; /* 设置圆角 */
+    margin-top: 20px; /* 设置顶部间距 */
+    display: block; /* 设置按钮为块级元素 */
+    width: 200px; /* 设置按钮宽度 */
+    margin-left: auto; /* 左侧自动对齐 */
+    margin-right: auto; /* 右侧自动对齐 */
 }
 
-/* 按钮悬停效果 */
-.btn:hover, .modal-content button:hover, .cart-item button:hover, #createOrderBtn:hover {
-    background-color: #555; /* 悬停时背景色变为浅灰色 */
+.btn:hover {
+    background-color: #555; /* 悬停时按钮变色 */
 }
+
 
 /*!* 商品部分 *!*/
 /*.itemList {*/
