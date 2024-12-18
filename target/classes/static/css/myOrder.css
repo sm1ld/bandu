@@ -1,0 +1,92 @@
+/* 订单详情页面主体样式 */
+#order-details-section {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+}
+
+h2 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+/* 订单详情项 */
+.order-details-item {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.order-details-item h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.order-details-item p {
+    font-size: 16px;
+    color: #555;
+}
+
+.order-items {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.order-item-details {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.order-item-details img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.order-item-details .item-info {
+    flex-grow: 1;
+    margin-left: 15px;
+}
+
+.order-item-details .item-info .item-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.order-item-details .item-info .item-price {
+    font-size: 16px;
+    color: #f60;
+}
+
+.order-item-details .item-info .item-quantity {
+    margin-top: 10px;
+}
+
+/* 返回按钮样式 */
+#backBtn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#backBtn:hover {
+    background-color: #0056b3;
+}

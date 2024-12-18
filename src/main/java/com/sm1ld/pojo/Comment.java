@@ -5,17 +5,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Comment {
-    private Integer id;        // 评论ID
-    private Integer itemId;    // 商品ID
-    private Integer adminId;    // 卖家ID
-    private Integer userId;    // 买家ID
-    private String content;     // 评论内容
-    private Integer rating;     // 评论星级
-    private LocalDateTime createdAt;// 数据库导入
+    private Integer id;             // 评论ID
+    private Integer itemId;         // 商品ID
+    private String content;         // 评论内容
+    private Integer userId;         // 评论者ID
+    private LocalDateTime createdAt; // 评论时间
+    private List<Reply> replies;    // 评论的多个回复
 
 }
+
+

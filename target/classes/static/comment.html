@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>商品评论区</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+      /* 评论区域样式 */
+    .comment-section {
+      /*margin-top: 30px;*/
+      margin: auto;
+      max-width: 800px;
+      width: 100%;
+    }
+
+    .comment {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      padding: 15px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .comment-header {
+      background-color: mistyrose;
+      width: auto;
+      /*display: flex;*/
+      justify-content: space-between;
+      font-size: 14px;
+      color: black;
+      padding: 10px;
+      margin-right: auto;
+    }
+
+
+
+    /* 回复样式 */
+    .replies {
+      /*margin-top: 10px;*/
+      /*margin-left: 40px;*/
+      /*display: flex;*/
+      margin-left: auto;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .reply {
+      background-color: #f1f1f1;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      width: inherit;
+    }
+
+    .reply-user-id {
+      font-weight: bold;
+      color: #555;
+    }
+
+    /* 隐藏回复输入框，点击按钮才显示 */
+    .reply-form {
+      display: none;
+      margin-top: 10px;
+      /*display: flex;*/
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .reply-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
+
+    .reply-form button {
+      padding: 8px 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .reply-form button:hover {
+      background-color: #45a049;
+    }
+
+    /* 回复按钮样式 */
+    .reply-button {
+      padding: 5px 10px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .reply-button:hover {
+      background-color: #2980b9;
+    }
+
+    /* 添加评论表单 */
+    .comment-form {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .comment-form textarea {
+      width: 80%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      margin-bottom: 10px;
+    }
+
+    .comment-form button {
+      padding: 10px 20px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .comment-form button:hover {
+      background-color: #2980b9;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>欢迎来到搬电砖</h1>
+  <nav>
+    <a href="index.html">首页</a> |
+    <a href="login.html">登录</a> |
+    <a href="register.html">注册</a> |
+    <a href="profile.html" id="profileLink">个人中心</a> |
+    <a href="myItem.html">我的商品</a> |
+    <a href="myCart.html">我的购物车</a> |
+    <a href="myOrder.html">我的订单</a> |
+    <span id="loginStatus"></span>
+  </nav>
+</header>
+
+<div class="comment-section" id="comment-section">
+  <!-- 评论区：这里的评论内容会动态加载 -->
+</div>
+
+<!-- 添加评论表单 -->
+<div class="comment-form">
+  <textarea id="newCommentContent" placeholder="请输入评论内容"></textarea>
+  <button onclick="submitComment()">提交评论</button>
+</div>
+
+<script>
+  // 获取商品ID
+  const urlParams = new URLSearchParams(window.location.search);
+  const itemId = urlParams.get('itemId');
+
+  if (!itemId) {
+    alert('商品ID缺失');
+    window.location.href = 'index.html'; // 跳转回首页或其他页面
+  } else {
+    // 加载评论
+    getComments(itemId);
+  }
+
+  // 获取评论及其回复
+  function getComments(itemId) {
+    const token = sessionStorage.getItem('token'); // 假设 token 存储在 sessionStorage 中
+
+    if (!token) {
+      alert('请先登录');
+      window.location.href = 'login.html'; // 如果没有 token，跳转到登录页面
+      return;
+    }
+
+    fetch(`http://localhost:8081/comment/item/${itemId}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}` // 添加 JWT 认证头
+      }
+    })
+            .then(response => response.json())
+            .then(data => {
+              if (data.code === 1) {
+                const comments = data.data; // 从字典中提取评论和回复数据
+                if (comments && Array.isArray(comments)) {
+                  const commentSection = document.getElementById('comment-section');
+                  commentSection.innerHTML = ''; // 清空现有的评论区
+
+                  comments.forEach(comment => {
+                    // 创建评论区域
+                    let commentDiv = document.createElement('div');
+                    commentDiv.classList.add('comment');
+                    commentDiv.id = 'comment-' + comment.id;
+
+                    let commentHeader = document.createElement('div');
+                    commentHeader.classList.add('comment-header');
+                    commentHeader.innerHTML = `
+              <span class="user-id">用户${comment.userId}评论：${comment.content}  </span>  at ${comment.createdAt}
+              <button onclick="deleteComment(${comment.id})">删除</button>
+            `;
+
+                    // let commentContent = document.createElement('div');
+                    // commentContent.classList.add('comment-content');
+                    // commentContent.textContent = ;
+
+                    commentDiv.appendChild(commentHeader);
+                    // commentDiv.appendChild(commentContent);
+
+                    // 回复区：如果有回复，展示回复
+                    if (comment.replies && Array.isArray(comment.replies) && comment.replies.length > 0) {
+                      let repliesDiv = document.createElement('div');
+                      repliesDiv.classList.add('replies');
+                      comment.replies.forEach(reply => {
+                        let replyDiv = document.createElement('div');
+                        replyDiv.classList.add('reply');
+                        replyDiv.innerHTML = `
+                  <span class="reply-user-id">用户 ${reply.sellerId}</span>回复: ${reply.content} at ${reply.createdAt}
+                  <button onclick="deleteReply(${reply.id})">删除</button>
+                `;
+                        repliesDiv.appendChild(replyDiv);
+                      });
+                      commentDiv.appendChild(repliesDiv);
+                    }
+
+                    // 回复按钮和输入框
+                    let replyButton = document.createElement('button');
+                    replyButton.classList.add('reply-button');
+                    replyButton.textContent = '回复';
+                    replyButton.onclick = function() {
+                      document.getElementById(`replyForm-${comment.id}`).style.display = 'block';
+                    };
+
+                    let replyForm = document.createElement('div');
+                    replyForm.id = `replyForm-${comment.id}`;
+                    replyForm.classList.add('reply-form');
+                    replyForm.innerHTML = `
+              <textarea id="replyContent-${comment.id}" placeholder="回复此评论"></textarea>
+              <button onclick="submitReply(${comment.id})">提交回复</button>
+            `;
+                    commentDiv.appendChild(replyButton);
+                    commentDiv.appendChild(replyForm);
+
+                    document.getElementById('comment-section').appendChild(commentDiv);
+                  });
+                } else {
+                  alert('没有评论数据');
+                }
+              } else {
+                alert('获取评论失败');
+              }
+            })
+            .catch(error => {
+              console.error('Error fetching comments:', error);
+              alert('评论加载失败，请稍后再试');
+            });
+  }
+
+  // 提交评论
+  function submitComment() {
+    const token = sessionStorage.getItem('token');
+    const content = document.getElementById('newCommentContent').value;
+
+    if (!token) {
+      alert('请先登录');
+      window.location.href = 'login.html'; // 跳转到登录页面
+      return;
+    }
+
+    if (!content) {
+      alert('评论内容不能为空');
+      return;
+    }
+
+    // 正确的请求体格式
+    const payload = {
+      itemId: itemId,  // 商品ID
+      content: content,  // 键名 'content' 对应评论内容
+    };
+
+    fetch('http://localhost:8081/comment/create', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload) // 使用正确格式传递参数
+    })
+            .then(response => response.json())
+            .then(data => {
+              if (data.code === 1) {
+                alert('评论发布成功');
+                getComments(itemId); // 重新加载评论
+              } else {
+                alert('评论发布失败');
+              }
+            })
+            .catch(error => {
+              console.error('Error submitting comment:', error);
+              alert('评论发布失败，请稍后再试');
+            });
+  }
+
+  // 提交回复
+  function submitReply(commentId) {
+    const token = sessionStorage.getItem('token');
+    const replyContent = document.getElementById(`replyContent-${commentId}`).value;
+
+    if (!token) {
+      alert('请先登录');
+      return;
+    }
+
+    if (!replyContent) {
+      alert('回复内容不能为空');
+      return;
+    }
+
+    fetch(`http://localhost:8081/comment/reply/${commentId}?content=${encodeURIComponent(replyContent)}`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+            .then(response => response.json())
+            .then(data => {
+              if (data.code === 1) {
+                alert('回复成功');
+                getComments(itemId); // 重新加载评论
+              } else {
+                alert('回复失败');
+              }
+            })
+            .catch(error => {
+              console.error('提交回复时发生错误:', error);
+              alert('回复失败，请稍后再试');
+            });
+  }
+
+  // 删除评论
+  function deleteComment(commentId) {
+    const token = sessionStorage.getItem('token');
+
+    if (!token) {
+      alert('请先登录');
+      return;
+    }
+
+    fetch(`http://localhost:8081/comment/${commentId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+            .then(response => response.json())
+            .then(data => {
+              if (data.code === 1) {
+                alert('评论删除成功');
+                getComments(itemId); // 重新加载评论
+              } else {
+                alert('删除失败');
+              }
+            });
+  }
+
+  // 删除回复
+  function deleteReply(replyId) {
+    const token = sessionStorage.getItem('token');
+
+    if (!token) {
+      alert('请先登录');
+      return;
+    }
+
+    fetch(`http://localhost:8081/comment/reply/${replyId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+            .then(response => response.json())
+            .then(data => {
+              if (data.code === 1) {
+                alert('回复删除成功');
+                getComments(itemId); // 重新加载评论
+              } else {
+                alert('删除失败');
+              }
+            });
+  }
+</script>
+
+</body>
+</html>

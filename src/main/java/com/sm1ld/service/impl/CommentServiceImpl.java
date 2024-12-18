@@ -21,12 +21,26 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Comment getCommentsByItem(Integer itemId) {
+    public List<Comment> getCommentsByItem(Integer itemId) {
+        // 查询评论
+
+
         return commentMapper.findByItemId(itemId);
     }
 
     @Override
-    public Comment getCommentsByUser(Integer userId) {
-        return commentMapper.findByUserId(userId);
+    public void InsertReply(Integer commentId, Integer sellerId, String content) {
+        commentMapper.insertReply(commentId, sellerId, content);
+
+    }
+
+    @Override
+    public void deleteComment(Integer commentId) {
+        commentMapper.deleteComment(commentId);
+    }
+
+    @Override
+    public void deleteReply(Integer replyId) {
+        commentMapper.deleteReply(replyId);
     }
 }
