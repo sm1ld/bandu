@@ -1,7 +1,35 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="com.sm1ld.mapper.CommentMapper">
+
+    <!-- 获取商品的评论，并联动获取回复 -->
+    <!-- 获取商品的评论并联动获取回复 -->
+    <select id="findByItemId" resultMap="commentWithReplies">
+        SELECT
+            c.id AS comment_id, c.itemId, c.userId, c.content, c.createdAt,
+            r.id AS replyId, r.sellerId, r.content AS replyContent, r.createdAt AS replyCreatedAt
+        FROM comment c
+                 LEFT JOIN reply r ON c.id = r.commentId
+        WHERE c.itemId = #{itemId}
+    </select>
+
+
+    <resultMap id="commentWithReplies" type="com.sm1ld.pojo.Comment">
+        <id property="id" column="comment_id"/>
+        <result property="itemId" column="itemId"/>
+        <result property="userId" column="userId"/>
+        <result property="content" column="content"/>
+        <result property="createdAt" column="createdAt"/>
+
+        <!-- 使用 collection 来绑定回复数据 -->
+        <collection property="replies" ofType="com.sm1ld.pojo.Reply">
+            <id property="id" column="replyId"/>
+            <result property="sellerId" column="sellerId"/>
+            <result property="content" column="replyContent"/>
+            <result property="createdAt" column="replyCreatedAt"/>
+        </collection>
+    </resultMap>
 
 
 

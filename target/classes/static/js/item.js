@@ -108,7 +108,15 @@ function addToCart(itemId) {
             alert('加入购物车失败，请稍后再试');
         });
 }
-
+// 跳转到评论页面
+window.goToCommentPage = function(){
+    const itemId = sessionStorage.getItem('itemId');
+    if (itemId) {
+        window.location.href = `comment.html?itemId=${itemId}`; // 使用商品ID跳转到评论页面
+    } else {
+        alert('商品ID缺失');
+    }
+}
 // 在页面加载完成时显示登录状态
 document.addEventListener('DOMContentLoaded', function () {
     displayLoginStatus(); // 调用显示登录状态的函数

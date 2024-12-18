@@ -56,9 +56,9 @@ function renderOrders(orders) {
 
 // 初始化页面
 document.addEventListener('DOMContentLoaded', async () => {
-        displayLoginStatus();
-        await fetchOrders(); // 获取并渲染订单数据
-    });
+    displayLoginStatus();
+    await fetchOrders(); // 获取并渲染订单数据
+});
 
 
 // import {displayLoginStatus} from './status.js';

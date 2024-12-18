@@ -60,8 +60,6 @@
     </insert>
 
 
-
-
     <!-- 根据订单ID查询订单详细信息（订单 + 商品） -->
     <select id="getOrderDetails" resultMap="orderWithItem" parameterType="Integer">
         SELECT o.orderId,
